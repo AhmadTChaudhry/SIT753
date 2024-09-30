@@ -38,6 +38,19 @@ pipeline {
             }
         }
 
+        stage('Code Quality Analysis') {
+            steps {
+                script {
+                    // Use SonarQube Scanner for Jenkins
+                    def scannerHome = tool 'SonarQubeScanner' // Ensure this matches the installation name
+                    withSonarQubeEnv('SonarCloud') { // Use the name you configured for SonarCloud
+                        // Run the SonarScanner
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=AhmadTChaudhry_SIT753 -Dsonar.organization=ahmadtchaudhry -Dsonar.sources=." // Assuming source code is in the root
+                    }
+                }
+            }
+        }
+
         stage('Release to Production') {
             steps {
                 script {
