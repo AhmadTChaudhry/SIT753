@@ -17,8 +17,6 @@ pipeline {
             }
         }
 
-        // stage('Te s
-
         // stage('Code Quality') {
         //     steps {
         //         script {
@@ -28,15 +26,15 @@ pipeline {
         //     }
         // }
 
-        stage('Deploy to Test Environment') {
-            steps {
-                script {
-                    // Push the Docker image to Docker Hub
-                    sh 'docker login -u ahmadtc -p H2Chuhet123'
-                    sh 'docker push $DOCKER_IMAGE'
-                }
-            }
-        }
+        // stage('Deploy to Test Environment') {
+        //     steps {
+        //         script {
+        //             // Push the Docker image to Docker Hub
+        //             sh 'docker login -u ahmadtc -p H2Chuhet123'
+        //             sh 'docker push $DOCKER_IMAGE'
+        //         }
+        //     }
+        // }
 
         stage('Release to Production') {
             steps {
