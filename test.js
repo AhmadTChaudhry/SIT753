@@ -23,45 +23,45 @@ describe('Unit Tests', function () {
 
     // Test Cases for /POST
 
-    // describe('Tests for POST /submit-form with Rollback', function () {
-    //     let insertedId;
+    describe('Tests for POST /submit-form with Rollback', function () {
+        let insertedId;
 
-    //     const formData = {
-    //         Name: 'Test Name',
-    //         Email: 'test@example.com',
-    //         Number: '1234567890',
-    //         Birthdate: '1997-02-17',
-    //         City: 'Test City',
-    //         State: 'Test State',
-    //         Postcode: '1234',
-    //         Message: 'This is a test message.'
-    //     };
+        const formData = {
+            Name: 'Test Name',
+            Email: 'test@example.com',
+            Number: '1234567890',
+            Birthdate: '1997-02-17',
+            City: 'Test City',
+            State: 'Test State',
+            Postcode: '1234',
+            Message: 'This is a test message.'
+        };
 
-    //     it('Should submit valid form data and insert into MongoDB', function (done) {
-    //         request.post({
-    //             url: `${baseURL}/submit-form`,
-    //             json: true,
-    //             body: formData
-    //         }, async function (error, response, body) {
-    //             expect(response.statusCode).to.equal(200);
-    //             expect(body.message).to.equal('Form submitted successfully! Someone will reach out to you :)');
+        it('Should submit valid form data and insert into MongoDB', function (done) {
+            request.post({
+                url: `${baseURL}/submit-form`,
+                json: true,
+                body: formData
+            }, async function (error, response, body) {
+                expect(response.statusCode).to.equal(200);
+                expect(body.message).to.equal('Form submitted successfully! Someone will reach out to you :)');
 
-    //             const collection = db.collection('formData');
-    //             const insertedData = await collection.findOne({ Email: formData.Email });
-    //             expect(insertedData).to.not.be.null;
-    //             insertedId = insertedData._id;
-    //             done();
-    //         });
-    //     });
+                const collection = db.collection('formData');
+                const insertedData = await collection.findOne({ Email: formData.Email });
+                expect(insertedData).to.not.be.null;
+                insertedId = insertedData._id;
+                done();
+            });
+        });
 
-    //     it('Should rollback the inserted data', async function () {
-    //         const collection = db.collection('formData');
-    //         await collection.deleteOne({ _id: insertedId });
+        it('Should rollback the inserted data', async function () {
+            const collection = db.collection('formData');
+            await collection.deleteOne({ _id: insertedId });
 
-    //         const deletedData = await collection.findOne({ _id: insertedId });
-    //         expect(deletedData).to.be.null;
-    //     });
-    // });
+            const deletedData = await collection.findOne({ _id: insertedId });
+            expect(deletedData).to.be.null;
+        });
+    });
 
     // Test Cases for /GET
 
