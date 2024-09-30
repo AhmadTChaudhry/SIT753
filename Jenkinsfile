@@ -23,7 +23,7 @@ pipeline {
                     steps {
                         script {
                             sh 'npm start &'
-                            sleep 10
+                            sleep 5
                         }
                     }
                 }
@@ -38,6 +38,14 @@ pipeline {
             }
         }
 
+        stage('Release to Production') {
+            steps {
+                script {
+                    sh 'docker run -d -p 80:3040 $DOCKER_IMAGE'
+                }
+            }
+        }
+
         stage('Deploy to Test Environment') {
             steps {
                 script {
@@ -47,22 +55,5 @@ pipeline {
                 }
             }
         }
-
-        stage('Release to Production') {
-            steps {
-                script {
-                    // Deploy to production (replace with your specific deployment command)
-                    sh 'docker run -d -p 80:3040 $DOCKER_IMAGE'
-                }
-            }
-        }
-
-        // stage('Cleanup') {
-        //     steps {
-        //         script {
-        //             sh 'kill $(jobs -p)' // This will terminate background jobs
-        //         }
-        //     }
-        // }
     }
 }
