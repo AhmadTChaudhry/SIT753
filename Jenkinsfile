@@ -5,13 +5,13 @@ pipeline {
         DOCKER_REGISTRY_CREDENTIALS = credentials('docker-hub-credentials')
         REPO = 'https://github.com/AhmadTChaudhry/SIT753'
         DOCKER_IMAGE = 'ahmadtc/753'
+        SONAR_TOKEN = credentials('SonarCloudToken')
     }
 
     stages {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Install npm packages
                     sh 'npm install'
                 }
             }
@@ -20,8 +20,25 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Build the Docker image
                     sh 'docker build -t $DOCKER_IMAGE .'
+                }
+            }
+        }
+
+        stage('SonarCloud Analysis') { // Add this new stage
+            steps {
+                script {
+                    sh '''
+                        # Set SonarCloud properties
+                        echo "sonar.projectKey=AhmadTChaudhry_SIT753" > sonar-project.properties
+                        echo "sonar.organization=ahmadtchaudhry" >> sonar-project.properties
+                        echo "sonar.sources=." >> sonar-project.properties
+                        echo "sonar.host.url=https://sonarcloud.io" >> sonar-project.properties
+                        echo "sonar.login=$SONAR_TOKEN" >> sonar-project.properties
+
+                        # Run the Sonar Scanner
+                        sonar-scanner -Dproject.settings=sonar-project.properties
+                    '''
                 }
             }
         }
@@ -51,7 +68,6 @@ pipeline {
         stage('Release to Production') {
             steps {
                 script {
-                    // Run the Docker container
                     sh 'docker run -d -p 80:3040 $DOCKER_IMAGE'
                 }
             }
@@ -60,8 +76,7 @@ pipeline {
         stage('Deploy to Test Environment') {
             steps {
                 script {
-                    // Push the Docker image to Docker Hub
-                    sh 'docker login -u ahmadtc -p H2Chuhet123' // Consider using credentials instead of hardcoding
+                    sh 'docker login -u ahmadtc -p H2Chuhet123' 
                     sh 'docker push $DOCKER_IMAGE'
                 }
             }
