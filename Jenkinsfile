@@ -13,6 +13,7 @@ pipeline {
             steps {
                 script {
                     sh 'npm install'
+                    echo 'DEPENDENCIES INSTALLED SUCCESSFULLY'
                 }
             }
         }
@@ -21,26 +22,32 @@ pipeline {
             steps {
                 script {
                     sh 'docker build -t $DOCKER_IMAGE .'
+                    echo 'DOCKER IMAGE BUILT SUCCESSFULLY'
                 }
             }
         }
 
-        // stage('SonarCloud Analysis') {
-        //     steps {
-        //         script {
-        //             sh '''
-        //                 echo "sonar.projectKey=AhmadTChaudhry_SIT753" > sonar-project.properties
-        //                 echo "sonar.organization=ahmadtchaudhry" >> sonar-project.properties
-        //                 echo "sonar.sources=." >> sonar-project.properties
-        //                 echo "sonar.host.url=https://sonarcloud.io" >> sonar-project.properties
-        //                 echo "sonar.login=$SONAR_TOKEN" >> sonar-project.properties
-        //                 echo "sonar.exclusions=**/*.js, **/*.ts, **/*.html, **/*.css" >> sonar-project.properties
-
-        //                 sonar-scanner -Dproject.settings=sonar-project.properties
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Unit Tests') {
+            parallel {
+                stage('Server') {
+                    steps {
+                        script {
+                            sh 'npm start &'
+                            sleep 5
+                        }
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        script {
+                            sleep 5
+                            sh 'npm test'
+                            echo 'UNIT TESTS PASSED SUCCESSFULLY'
+                        }
+                    }
+                }
+            }
+        }
 
         stage('SonarCloud Analysis') {
             steps {
@@ -61,40 +68,21 @@ pipeline {
             }
         }
 
-        stage('Run Server and Tests') {
-            parallel {
-                stage('Server') {
-                    steps {
-                        script {
-                            sh 'npm start &'
-                            sleep 5
-                        }
-                    }
-                }
-                stage('Test') {
-                    steps {
-                        script {
-                            sleep 5
-                            sh 'npm test'
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Release to Production') {
+        stage('Deploy') {
             steps {
                 script {
                     sh 'docker run -d -p 80:3040 $DOCKER_IMAGE'
+                    echo 'DOCKER CONTAINER STARTED SUCCESSFULLY'
                 }
             }
         }
 
-        stage('Deploy to Test Environment') {
+        stage('Release') {
             steps {
                 script {
                     sh 'docker login -u ahmadtc -p H2Chuhet123'
                     sh 'docker push $DOCKER_IMAGE'
+                    echo 'DOCKER IMAGE PUSHED SUCCESSFULLY'
                 }
             }
         }
