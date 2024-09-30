@@ -17,30 +17,24 @@ pipeline {
             }
         }
 
-        stage('Server') {
-            steps {
-                script {
-                    sh 'npm start'
+        stage('Run Server and Tests') {
+            parallel {
+                stage('Server') {
+                    steps {
+                        script {
+                            sh 'npm start'
+                        }
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        script {
+                            sh 'npm test'
+                        }
+                    }
                 }
             }
         }
-
-        stage('Test') {
-            steps {
-                script {
-                    sh 'npm test'
-                }
-            }
-        }
-
-        // stage('Code Quality') {
-        //     steps {
-        //         script {
-        //             // Run SonarQube or any other quality tool
-        //             sh 'sonar-scanner'
-        //         }
-        //     }
-        // }
 
         stage('Deploy to Test Environment') {
             steps {
