@@ -1,8 +1,7 @@
 FROM node:14
-FROM jenkins/jenkins:lts
-USER root
-RUN apt-get update
-RUN curl -sSL https://get.docker.com/ | sh
+FROM jenkins/inbound-agent
+RUN apt-get update && apt-get install XXX
+
 WORKDIR /app
 
 COPY package*.json ./
