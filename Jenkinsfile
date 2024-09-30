@@ -59,6 +59,7 @@ pipeline {
                     sh 'echo "sonar.login=$SONAR_TOKEN" >> sonar-project.properties'
                     sh 'echo "sonar.exclusions=**/*.js, **/*.ts, **/*.html, **/*.css" >> sonar-project.properties'
                     sh 'sonar-scanner -Dproject.settings=sonar-project.properties'
+                    echo 'SONARCLOUD ANALYSIS COMPLETED SUCCESSFULLY'
                 }
             }
         }
