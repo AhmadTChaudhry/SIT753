@@ -7,11 +7,17 @@ services:
       - "3040:3040"
     environment:
       NODE_ENV: development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3040/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   test:
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
-      - app
+      app:
+        condition: service_healthy
     command: npm test
