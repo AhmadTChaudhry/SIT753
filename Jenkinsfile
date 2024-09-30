@@ -29,6 +29,10 @@ pipeline {
         stage('Code Quality') {
             steps {
                 script {
+                    // Start the server in the background
+                    sh 'docker run -d -p 3040:3040 ahmadtc/753 npm start'
+                    // Wait for a few seconds to ensure the server is up
+                    sleep(5)
                     // Run SonarQube or any other quality tool
                     sh 'sonar-scanner'
                 }
