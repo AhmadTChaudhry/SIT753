@@ -23,6 +23,7 @@ pipeline {
                     steps {
                         script {
                             sh 'npm start &'
+                            sleep 10
                         }
                     }
                 }
