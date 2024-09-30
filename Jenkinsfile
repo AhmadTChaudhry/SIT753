@@ -22,7 +22,7 @@ pipeline {
                 stage('Server') {
                     steps {
                         script {
-                            sh 'npm start'
+                            sh 'npm start &'
                         }
                     }
                 }
@@ -32,6 +32,13 @@ pipeline {
                             sh 'npm test'
                         }
                     }
+                }
+            }
+        }
+        stage('Cleanup') {
+            steps {
+                script {
+                    sh 'kill $(jobs -p)' // This will terminate background jobs
                 }
             }
         }
