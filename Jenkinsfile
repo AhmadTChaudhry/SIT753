@@ -17,10 +17,17 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Server') {
             steps {
                 script {
                     sh 'npm start'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
                     sh 'npm test'
                 }
             }
