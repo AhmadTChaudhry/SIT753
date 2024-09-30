@@ -30,6 +30,7 @@ pipeline {
                 stage('Test') {
                     steps {
                         script {
+                            sleep 5
                             sh 'npm test'
                         }
                     }
@@ -56,7 +57,7 @@ pipeline {
             }
         }
 
-         stage('Cleanup') {
+        stage('Cleanup') {
             steps {
                 script {
                     sh 'kill $(jobs -p)' // This will terminate background jobs
