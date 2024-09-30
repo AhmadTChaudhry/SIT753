@@ -8,6 +8,7 @@ const baseURL = 'http://localhost:3040';
 // Database Connection
 const uri = 'mongodb+srv://ahmadtc17:lEHPujvj7D0nruzG@cluster0.fjfikfh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 const client = new MongoClient(uri);
+this.timeout(5000); // Set timeout to 5000ms (5 seconds)
 
 describe('Unit Tests', function () {
     let db;
