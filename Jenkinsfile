@@ -52,18 +52,13 @@ pipeline {
         stage('SonarCloud Analysis') {
             steps {
                 script {
-                    sh '''
-                        cat <<EOF > sonar-project.properties
-                        sonar.projectKey=AhmadTChaudhry_SIT753
-                        sonar.organization=ahmadtchaudhry
-                        sonar.sources=.
-                        sonar.host.url=https://sonarcloud.io
-                        sonar.login=$SONAR_TOKEN
-                        sonar.exclusions=**/*.js, **/*.ts, **/*.html, **/*.css
-                        EOF
-
-                        sonar-scanner -Dproject.settings=sonar-project.properties
-                    '''
+                    sh 'echo "sonar.projectKey=AhmadTChaudhry_SIT753" > sonar-project.properties'
+                    sh 'echo "sonar.organization=ahmadtchaudhry" >> sonar-project.properties'
+                    sh 'echo "sonar.sources=." >> sonar-project.properties'
+                    sh 'echo "sonar.host.url=https://sonarcloud.io" >> sonar-project.properties'
+                    sh 'echo "sonar.login=$SONAR_TOKEN" >> sonar-project.properties'
+                    sh 'echo "sonar.exclusions=**/*.js, **/*.ts, **/*.html, **/*.css" >> sonar-project.properties'
+                    sh 'sonar-scanner -Dproject.settings=sonar-project.properties'
                 }
             }
         }
