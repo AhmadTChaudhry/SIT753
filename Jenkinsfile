@@ -22,8 +22,6 @@ pipeline {
                 script {
                     // Start the server in the background
                     sh 'docker run -d -p 3040:3040 ahmadtc/753 npm start'
-                    // Wait for a few seconds to ensure the server is up
-                    sleep(5)
                     // Run tests
                     sh 'docker run $DOCKER_IMAGE npm test'
                 }
