@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         DOCKER_REGISTRY_CREDENTIALS = credentials('docker-hub-credentials')
-        REPO = 'https://github.com/AhmadTChaudhry/SIT753'
         DOCKER_IMAGE = 'ahmadtc/753'
     }
 
@@ -11,8 +10,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Build the Docker image
-                    sh 'docker build -t $DOCKER_IMAGE .'
+                    // Build the Docker images
+                    sh 'docker-compose build'
                 }
             }
         }
@@ -20,10 +19,8 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Start the server in the background
-                    sh 'docker run -d -p 3040:3040 ahmadtc/753 npm start'
-                    // Run tests
-                    sh 'docker run $DOCKER_IMAGE npm test'
+                    // Run the tests using Docker Compose
+                    sh 'docker-compose up --abort-on-container-exit --exit-code-from test'
                 }
             }
         }
@@ -42,7 +39,7 @@ pipeline {
                 script {
                     // Push the Docker image to Docker Hub
                     sh 'docker login -u ahmadtc -p H2Chuhet123'
-                    sh 'docker push $DOCKER_IMAGE'
+                    sh 'docker-compose push app'
                 }
             }
         }

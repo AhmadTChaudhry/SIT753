@@ -16,9 +16,6 @@ COPY . .
 # Expose the port your app runs on
 EXPOSE 3040
 
-# Define environment variable to production
-ENV NODE_ENV=production
-
 # Start the server
 CMD ["npm", "start"]
 
