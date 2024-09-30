@@ -25,21 +25,38 @@ pipeline {
             }
         }
 
+        // stage('SonarCloud Analysis') {
+        //     steps {
+        //         script {
+        //             sh '''
+        //                 echo "sonar.projectKey=AhmadTChaudhry_SIT753" > sonar-project.properties
+        //                 echo "sonar.organization=ahmadtchaudhry" >> sonar-project.properties
+        //                 echo "sonar.sources=." >> sonar-project.properties
+        //                 echo "sonar.host.url=https://sonarcloud.io" >> sonar-project.properties
+        //                 echo "sonar.login=$SONAR_TOKEN" >> sonar-project.properties
+        //                 echo "sonar.exclusions=**/*.js, **/*.ts, **/*.html, **/*.css" >> sonar-project.properties
+
+        //                 sonar-scanner -Dproject.settings=sonar-project.properties
+        //             '''
+        //         }
+        //     }
+        // }
+
         stage('SonarCloud Analysis') {
             steps {
                 script {
                     sh '''
-                        # Set SonarCloud properties
-                        echo "sonar.projectKey=AhmadTChaudhry_SIT753" > sonar-project.properties
-                        echo "sonar.organization=ahmadtchaudhry" >> sonar-project.properties
-                        echo "sonar.sources=." >> sonar-project.properties
-                        echo "sonar.host.url=https://sonarcloud.io" >> sonar-project.properties
-                        echo "sonar.login=$SONAR_TOKEN" >> sonar-project.properties
-                        echo "sonar.exclusions=**/*.js, **/*.ts, **/*.html, **/*.css" >> sonar-project.properties
+                cat <<EOF > sonar-project.properties
+                sonar.projectKey=AhmadTChaudhry_SIT753
+                sonar.organization=ahmadtchaudhry
+                sonar.sources=.
+                sonar.host.url=https://sonarcloud.io
+                sonar.login=$SONAR_TOKEN
+                sonar.exclusions=**/*.js, **/*.ts, **/*.html, **/*.css
+                EOF
 
-                        # Run the Sonar Scanner
-                        sonar-scanner -Dproject.settings=sonar-project.properties
-                    '''
+                sonar-scanner -Dproject.settings=sonar-project.properties
+            '''
                 }
             }
         }
@@ -57,8 +74,8 @@ pipeline {
                 stage('Test') {
                     steps {
                         script {
-                            sleep 5 
-                            sh 'npm test' 
+                            sleep 5
+                            sh 'npm test'
                         }
                     }
                 }
@@ -76,7 +93,7 @@ pipeline {
         stage('Deploy to Test Environment') {
             steps {
                 script {
-                    sh 'docker login -u ahmadtc -p H2Chuhet123' 
+                    sh 'docker login -u ahmadtc -p H2Chuhet123'
                     sh 'docker push $DOCKER_IMAGE'
                 }
             }
