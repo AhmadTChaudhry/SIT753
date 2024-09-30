@@ -36,13 +36,6 @@ pipeline {
                 }
             }
         }
-        stage('Cleanup') {
-            steps {
-                script {
-                    sh 'kill $(jobs -p)' // This will terminate background jobs
-                }
-            }
-        }
 
         stage('Deploy to Test Environment') {
             steps {
@@ -59,6 +52,14 @@ pipeline {
                 script {
                     // Deploy to production (replace with your specific deployment command)
                     sh 'docker run -d -p 80:3040 $DOCKER_IMAGE'
+                }
+            }
+        }
+
+         stage('Cleanup') {
+            steps {
+                script {
+                    sh 'kill $(jobs -p)' // This will terminate background jobs
                 }
             }
         }
