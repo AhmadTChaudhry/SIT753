@@ -35,7 +35,7 @@ pipeline {
                         echo "sonar.sources=." >> sonar-project.properties
                         echo "sonar.host.url=https://sonarcloud.io" >> sonar-project.properties
                         echo "sonar.login=$SONAR_TOKEN" >> sonar-project.properties
-                        echo "sonar.nodejs.executable=$(which node)" >> sonar-project.properties  # Specify Node.js executable
+                        echo "sonar.nodejs.executable=$(which node)" >> sonar-project.properties
 
                         # Run the Sonar Scanner
                         sonar-scanner -Dproject.settings=sonar-project.properties
