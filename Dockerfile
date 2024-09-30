@@ -2,7 +2,7 @@
 FROM node:alpine
 
 # Install supervisor
-RUN apt-get update && apt-get install -y supervisor
+RUN apt-get update && apt-get install -y supervisord
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
