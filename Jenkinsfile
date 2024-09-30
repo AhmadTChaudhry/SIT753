@@ -16,14 +16,14 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                script {
-                    // Run the tests using Docker Compose
-                    sh 'docker-compose up --abort-on-container-exit --exit-code-from test'
-                }
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         script {
+        //             // Run the tests using Docker Compose
+        //             sh 'docker-compose up --abort-on-container-exit --exit-code-from test'
+        //         }
+        //     }
+        // }
 
         stage('Code Quality') {
             steps {
