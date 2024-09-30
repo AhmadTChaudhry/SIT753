@@ -24,8 +24,9 @@
     "devDependencies": {
         "@types/node": "^22.1.0",
         "chai": "^4.3.7",
+        "codeclimate-test-reporter": "^0.5.1",
+        "http": "^0.0.1-security",
         "mocha": "^10.7.3",
-        "request": "^2.88.2",
-        "http": "^0.0.1-security"
+        "request": "^2.88.2"
     }
 }
