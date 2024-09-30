@@ -19,5 +19,3 @@ EXPOSE 3040
 # Start the server
 CMD ["npm", "start"]
 
-# Optional: Run tests before starting the server (you can add this in Jenkins pipeline if preferred)
-RUN npm test
