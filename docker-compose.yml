@@ -9,7 +9,7 @@ services:
       NODE_ENV: development
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3040/"]
-      interval: 10s
+      interval: 5s
       timeout: 5s
       retries: 5
 
