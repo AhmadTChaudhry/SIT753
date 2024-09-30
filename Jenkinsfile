@@ -17,6 +17,14 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                script {
+                    sh 'npm test'
+                }
+            }
+        }
+
         // stage('Code Quality') {
         //     steps {
         //         script {
