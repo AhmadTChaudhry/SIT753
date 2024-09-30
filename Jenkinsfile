@@ -41,7 +41,7 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 script {
-                    def scannerHome = tool 'SonarQubeScanner' // Ensure this matches the updated name
+                    def scannerHome = tool 'SonarCloud' // Ensure this matches the updated name
                     withSonarQubeEnv('SonarCloud') {
                         sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=AhmadTChaudhry_SIT753 -Dsonar.organization=ahmadtchaudhry -Dsonar.sources=."
                     }
