@@ -57,12 +57,12 @@ pipeline {
             }
         }
 
-        stage('Cleanup') {
-            steps {
-                script {
-                    sh 'kill $(jobs -p)' // This will terminate background jobs
-                }
-            }
-        }
+        // stage('Cleanup') {
+        //     steps {
+        //         script {
+        //             sh 'kill $(jobs -p)' // This will terminate background jobs
+        //         }
+        //     }
+        // }
     }
 }
