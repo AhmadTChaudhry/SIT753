@@ -1,9 +1,6 @@
 # Use the official Node.js image as the base image
 FROM node:alpine
 
-# Install supervisor
-RUN apt-get update && apt-get install -y supervisord
-
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
@@ -12,9 +9,6 @@ COPY package*.json ./
 
 # Install dependencies
 RUN npm install
-
-# Copy the supervisor configuration file
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Copy the rest of the application code to the container
 COPY . .
