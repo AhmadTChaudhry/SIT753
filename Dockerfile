@@ -6,10 +6,9 @@ WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json to the container
 COPY package*.json ./
-COPY start.sh /usr/src/app/start.sh
+
 # Install dependencies
 RUN npm install
-RUN chmod +x /usr/src/app/start.sh
 
 # Copy the rest of the application code to the container
 COPY . .
@@ -18,8 +17,7 @@ COPY . .
 EXPOSE 3040
 
 # Start the server
-# CMD ["npm", "start"]
-CMD ["/usr/src/app/start.sh"]
+CMD ["npm", "start"]
 
 # Optional: Run tests before starting the server (you can add this in Jenkins pipeline if preferred)
-# RUN npm test
+RUN npm test
