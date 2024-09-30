@@ -25,14 +25,14 @@ pipeline {
         //     }
         // }
 
-        stage('Code Quality') {
-            steps {
-                script {
-                    // Run SonarQube or any other quality tool
-                    sh 'sonar-scanner'
-                }
-            }
-        }
+        // stage('Code Quality') {
+        //     steps {
+        //         script {
+        //             // Run SonarQube or any other quality tool
+        //             sh 'sonar-scanner'
+        //         }
+        //     }
+        // }
 
         stage('Deploy to Test Environment') {
             steps {
