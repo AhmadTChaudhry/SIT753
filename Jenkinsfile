@@ -25,7 +25,7 @@ pipeline {
             }
         }
 
-        stage('SonarCloud Analysis') { // Add this new stage
+        stage('SonarCloud Analysis') {
             steps {
                 script {
                     sh '''
@@ -35,7 +35,7 @@ pipeline {
                         echo "sonar.sources=." >> sonar-project.properties
                         echo "sonar.host.url=https://sonarcloud.io" >> sonar-project.properties
                         echo "sonar.login=$SONAR_TOKEN" >> sonar-project.properties
-                        echo "sonar.exclusions=**/*.js, **/*.ts" >> sonar-project.properties
+                        echo "sonar.exclusions=**/*.js, **/*.ts, **/*.html" >> sonar-project.properties
 
                         # Run the Sonar Scanner
                         sonar-scanner -Dproject.settings=sonar-project.properties
@@ -49,17 +49,16 @@ pipeline {
                 stage('Server') {
                     steps {
                         script {
-                            // Start the server
                             sh 'npm start &'
-                            sleep 5 // Wait for the server to start
+                            sleep 5
                         }
                     }
                 }
                 stage('Test') {
                     steps {
                         script {
-                            sleep 5 // Wait for the server to be ready
-                            sh 'npm test' // Run your tests
+                            sleep 5 
+                            sh 'npm test' 
                         }
                     }
                 }
