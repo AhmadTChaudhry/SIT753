@@ -1,5 +1,5 @@
 #!/bin/bash
-node controller.js &
+npm start &
 sleep 5
 npm test
 wait
