@@ -46,17 +46,17 @@ pipeline {
             steps {
                 script {
                     sh '''
-                cat <<EOF > sonar-project.properties
-                sonar.projectKey=AhmadTChaudhry_SIT753
-                sonar.organization=ahmadtchaudhry
-                sonar.sources=.
-                sonar.host.url=https://sonarcloud.io
-                sonar.login=$SONAR_TOKEN
-                sonar.exclusions=**/*.js, **/*.ts, **/*.html, **/*.css
-                EOF
+                        cat <<EOF > sonar-project.properties
+                        sonar.projectKey=AhmadTChaudhry_SIT753
+                        sonar.organization=ahmadtchaudhry
+                        sonar.sources=.
+                        sonar.host.url=https://sonarcloud.io
+                        sonar.login=$SONAR_TOKEN
+                        sonar.exclusions=**/*.js, **/*.ts, **/*.html, **/*.css
+                        EOF
 
-                sonar-scanner -Dproject.settings=sonar-project.properties
-            '''
+                        sonar-scanner -Dproject.settings=sonar-project.properties
+                    '''
                 }
             }
         }
